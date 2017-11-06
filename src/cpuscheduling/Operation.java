@@ -40,7 +40,8 @@ public class Operation {
 				robin[i][j] = 0;
 			}
 		}
-		// placing value in the Rrobin array
+		
+		// placing value in the Rrobin array; if for loop is possible we should use that instead
 		i = 1;
 		while (i <= n) {
 			j = 1;
@@ -59,7 +60,7 @@ public class Operation {
 			i++;
 		}
 
-		// calculating weighting time
+		// calculating weighting time; should be independent method
 		int x = 1;
 		i = 1;
 		while (x <= n) {
@@ -86,7 +87,7 @@ public class Operation {
 		for (i = 1; i <= n; i++) {
 			System.out.println("Waiting Time for process p" + i + ":" + Wt[i]);
 		}
-		// calculating Average Weighting Time
+		// calculating Average Weighting Time; should be independent method
 		for (i = 1; i <= n; i++) {
 			time = time + Wt[i];
 			average = time / n;
