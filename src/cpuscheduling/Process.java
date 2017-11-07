@@ -3,7 +3,7 @@ package cpuscheduling;
 public class Process {
 	
 	int arrivalTime;
-	int time;
+	int reqTime;
 	int priority;
 	
 	/*
@@ -18,9 +18,11 @@ public class Process {
 		//empty
 	}
 	
-	public Process(int arrivalTime, int time, int priority)
+	public Process(int arrivalTime, int reqTime, int priority)
 	{
-		
+		this.arrivalTime = arrivalTime;
+		this.reqTime = reqTime;
+		this.priority = priority;
 	}
 
 }

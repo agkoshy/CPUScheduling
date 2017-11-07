@@ -86,10 +86,9 @@ public class Schedule {
 	
 	public static void main()
 	{
-		//create queue
-		//feed processes through schedules
-		//feed schedule to queue
-		Queue queue = new Queue();
+		//build array of processes
+		//call a schedule using said array
+		//schedule will build the queue with respective rules
 		
 	}
 	
