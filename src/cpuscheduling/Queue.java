@@ -34,10 +34,10 @@ public class Queue<T>{
 		}
 	}
 	
-	public void add(T process)
+	public void add(Node<T> node)
 	{
 		Node<T> newNode = new Node<T>();
-		newNode.setProcess(process);
+		newNode = node;
 		
 		if (head == null)
 		{
@@ -51,9 +51,10 @@ public class Queue<T>{
 		}
 	}
 	
-	public void addHead(Node<T> process)
+	public void addHead(Node<T> node)
 	{
 		Node<T> newNode = new Node<T>();
+		newNode = node;
 		if (head == null)
 		{
 			newNode.setNext(null);
@@ -93,7 +94,7 @@ public class Queue<T>{
 		}
 	}
 	
-	public void removeHead(T process)
+	public void removeHead(Node<T> process)
 	{
 		if (head == null)
 			System.out.println("Underflow");
@@ -103,7 +104,7 @@ public class Queue<T>{
 			tail = null;
 	}
 	
-	public void removeTail(T process)
+	public void removeTail(Node<T> process)
 	{
 		if (head == null)
 			System.out.println("Underflow");
