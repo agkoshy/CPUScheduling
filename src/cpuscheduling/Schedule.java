@@ -8,9 +8,9 @@ public class Schedule {
 	public Schedule()
 	{
 		process = new Process();
-		this.size = process.numOfProcesses();
-		this.burst = process.burstTime();
-		this.quantum = process.quantumTime();
+//		this.size = process.numOfProcesses();
+//		this.burst = process.burstTime();
+//		this.quantum = process.quantumTime();
 		
 	}
 	
