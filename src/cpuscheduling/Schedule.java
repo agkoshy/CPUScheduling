@@ -15,7 +15,6 @@ public class Schedule extends Queue{
 	int[] burst, wait, turnaround;
 	public Schedule()
 	{
-		process = new Process();
 		//		this.size = process.numOfProcesses();
 		//		this.burst = process.burstTime();
 		//		this.quantum = process.quantumTime();
@@ -71,15 +70,9 @@ public class Schedule extends Queue{
 	 * Non-preemptive Priority Scheduling
 	 * Highest priority is current running process
 	 */
-<<<<<<< HEAD
 	
 	private static void NP_Priority(ArrayList<Process> list)
-=======
-
-	private void NP_Priority()
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
 	{
-<<<<<<< HEAD
 		Process temp;
 		
 		// insertion sort to sort prioritized processes
@@ -95,27 +88,16 @@ public class Schedule extends Queue{
 				}
 			}
 		}
-=======
-
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
 	}
 
 	/*
 	 * Preemptive Priority Scheduling
 	 * Runs by priority until completion
 	 */
-<<<<<<< HEAD
 	
 	private static void P_Priority(ArrayList<Process> list)
-=======
-
-	private void P_Priority()
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
 	{
-<<<<<<< HEAD
 		Process temp;
-		
-		// insertion sort to sort prioritized processes
 		for (int i = 0; i < list.size(); i++)
 		{
 			for (int j = i; 0 < j; j--)
@@ -128,9 +110,7 @@ public class Schedule extends Queue{
 				}
 			}
 		}
-=======
-
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
+		
 	}
 
 	/*
@@ -215,20 +195,15 @@ public class Schedule extends Queue{
 
 	public static void main()
 	{
-<<<<<<< HEAD
 		ArrayList<Process> list = new ArrayList<Process>();
 		for (int i = 0; i < 5; i++)
 		{
 			list.add((Process) new Process(i, new Random().nextInt(6)  , new Random().nextInt(6)));
 		}
 		NP_Priority(list);
-		
-=======
 		//build array of processes
 		//call a schedule using said array
 		//schedule will build the queue with respective rules
-
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
 	}
 
 	private void average()

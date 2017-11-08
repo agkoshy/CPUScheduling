@@ -17,7 +17,6 @@ public class Process {
 		this.priority = priority;
 //		burst = new int[this.numOfProcesses()];
 	}
-<<<<<<< HEAD
 	
 	public int getArrivalTime()
 	{
@@ -33,7 +32,7 @@ public class Process {
 	{
 		return this.priority;
 	}
-=======
+	
 //	
 //	public int numOfProcesses() {
 //		System.out.println("Enter number of Processes");
@@ -54,5 +53,5 @@ public class Process {
 //		return scn.nextInt();
 //	}
 
->>>>>>> branch 'master' of https://github.com/agkoshy/CPUScheduling.git
+	
 }
