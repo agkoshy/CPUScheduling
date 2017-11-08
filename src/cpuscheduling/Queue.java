@@ -1,45 +1,83 @@
 package cpuscheduling;
-import java.util.*;
 
-//what data structure do we use to construct the queue?
 
-public class Queue<T>{
+public class Queue{
 	
-	private Node<T> head;
-	private Node<T> tail;
+	private Node<Process> head;
+	private Node<Process> tail;
 	
-	private class Node<T>
+	public static class Node<Process>
 	{
-		private T process;
-		private Node<T> next;
+		private Process content;
+		private Node<Process> next;
 		
-		public T getProcess()
-		{
-			return process;
+		public Node(Process process) {
+			this.content = process;
 		}
-		
-		public void setProcess(T process)
-		{
-			this.process = process;
+
+		public Node() {
+			
 		}
-		
-		public Node<T> getNext()
+
+		public Node<Process> getNext()
 		{
 			return next;
 		}
 		
-		public void setNext(Node<T> next)
+		public void setNext(Node<Process> next)
 		{
 			this.next = next;
 		}
 	}
 	
-	public void add(Node<T> node)
+	public boolean isEmpty()
 	{
-		Node<T> newNode = new Node<T>();
+		return head == null;
+	}
+	
+	public Process peek()
+	{
+		if (isEmpty()) System.out.println("No processes");
+		return head.content;
+	}
+	
+	public void enqueue(Process process)
+	{
+		Node<Process> newNode = new Node();
+		newNode.content = process;
+		if (isEmpty())
+		{
+			head = newNode;
+			tail = newNode;
+		}
+		else
+		{
+			tail.next = newNode;
+			tail = newNode;
+		}
+	}
+	
+	public cpuscheduling.Process dequeue() throws Exception
+	{
+		if (isEmpty())
+			throw new Exception("Nothing to dequeue");
+		else
+		{
+			Node<Process> temp;
+			temp = head;
+			head.next = head;
+			return temp.content;
+		}
+	}
+	
+	/*
+	
+	public void add(Node<Process> node)
+	{
+		Node<Process> newNode = new Node<Process>(node.content);
 		newNode = node;
 		
-		if (head == null)
+		if (isEmpty())
 		{
 			head = newNode;
 			tail = newNode;
@@ -51,11 +89,11 @@ public class Queue<T>{
 		}
 	}
 	
-	public void addHead(Node<T> node)
+	public void addHead(Node<Process> node)
 	{
-		Node<T> newNode = new Node<T>();
+		Node<Process> newNode = new Node<Process>(node.content);
 		newNode = node;
-		if (head == null)
+		if (isEmpty())
 		{
 			newNode.setNext(null);
 			head = newNode;
@@ -67,19 +105,19 @@ public class Queue<T>{
 		}
 	}
 	
-	public void insertAfter(Node<T> Pointer, Node<T> node)
+	public void insertAfter(Node<Process> Pointer, Node<Process> node)
 	{
-		Node<T>	newNode = new Node<T>();
-		newNode.process = node.process;
+		Node<Process> newNode = new Node<Process>(node.content);
+		newNode.content = node.content;
 		
-		if (head == null)
+		if (isEmpty())
 		{
 			newNode.setNext(null);
 			head = newNode;
 		}
 		else
 		{
-			Node<T> p = head;
+			Node<Process> p = head;
 			do
 			{
 				p = p.next;
@@ -94,24 +132,24 @@ public class Queue<T>{
 		}
 	}
 	
-	public void removeHead(Node<T> process)
+	public void removeHead(Node<Process> process)
 	{
-		if (head == null)
+		if (isEmpty())
 			System.out.println("Underflow");
-		Node<T> temp = head;
+		Node<Process> temp = head;
 		head = temp.getNext();
-		if (head == null)
+		if (isEmpty())
 			tail = null;
 	}
 	
-	public void removeTail(Node<T> process)
+	public void removeTail(Node<Process> process)
 	{
-		if (head == null)
+		if (isEmpty())
 			System.out.println("Underflow");
 		else
 		{
-			Node<T> temp1 = head;
-			Node<T>	temp2 = null;
+			Node<Process> temp1 = head;
+			Node<Process>	temp2 = null;
 			if (temp1.next == null)
 			{
 				head = null;
@@ -130,18 +168,17 @@ public class Queue<T>{
 		}
 	}
 	
-	public void deletePoint(Node<T> node)
+	public void deletePoint(Node<Process> node)
 	{
-		if (head == null)
+		if (isEmpty())
 			System.out.println("Empty queue");
 		else
 		{
-			Node<T> temp1, temp2;
+			Node<Process> temp1, temp2 = null;
 			temp1 = head;
 			do
 			{
 				temp1 = temp1.next;
-				temp2 = temp1;
 				if (temp1 == tail)
 				{
 					System.out.println("End of list, process not found");
@@ -149,7 +186,7 @@ public class Queue<T>{
 				}
 				else if (temp1 == node)
 				{
-					if (node == tail)
+					if (node == head && node == tail)
 					{
 						tail = null;
 						head = null;
@@ -177,11 +214,14 @@ public class Queue<T>{
 						}
 					}
 				}
+				temp2 = temp1;
 			}
 			while ( temp1 != node || temp1 != tail);
 			
 		}
 	}
+	
+	*/
 
 	public Queue()
 	{

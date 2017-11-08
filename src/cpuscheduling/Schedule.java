@@ -1,6 +1,14 @@
 package cpuscheduling;
 
-public class Schedule {
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Random;
+
+public class Schedule extends Queue{
+	
+	static Queue queue = new Queue();
 
 	public Schedule()
 	{
@@ -8,7 +16,7 @@ public class Schedule {
 	}
 	
 	/*
-	 * Nonpreemptive First-Come, First-Served (FCFS) Scheduling
+	 * Non-preemptive First-Come, First-Served (FCFS) Scheduling
 	 */
 	
 	private void NP_FCFS()
@@ -18,7 +26,7 @@ public class Schedule {
 	
 	
 	/*
-	 * Nonpreemptive Shortest-Job-First (SJF) Scheduling
+	 * Non-preemptive Shortest-Job-First (SJF) Scheduling
 	 */
 	
 	
@@ -39,21 +47,51 @@ public class Schedule {
 	
 	
 	/*
-	 * Nonpreemptive Priority Scheduling
+	 * Non-preemptive Priority Scheduling
+	 * Highest priority is current running process
 	 */
 	
-	private void NP_Priority()
+	private static void NP_Priority(ArrayList<Process> list)
 	{
+		Process temp;
 		
+		// insertion sort to sort prioritized processes
+		for (int i = 0; i < list.size(); i++)
+		{
+			for (int j = i; 0 < j; j--)
+			{
+				if ( list.get(j).getPriority() < list.get(j - 1).getPriority())
+				{
+					temp = list.get(j);
+					list.set(j, list.get(j - 1));
+					list.set(j -1, temp);
+				}
+			}
+		}
 	}
 	
 	/*
 	 * Preemptive Priority Scheduling
+	 * Runs by priority until completion
 	 */
 	
-	private void P_Priority()
+	private static void P_Priority(ArrayList<Process> list)
 	{
+		Process temp;
 		
+		// insertion sort to sort prioritized processes
+		for (int i = 0; i < list.size(); i++)
+		{
+			for (int j = i; 0 < j; j--)
+			{
+				if ( list.get(j).getPriority() < list.get(j - 1).getPriority())
+				{
+					temp = list.get(j);
+					list.set(j, list.get(j - 1));
+					list.set(j -1, temp);
+				}
+			}
+		}
 	}
 	
 	/*
@@ -86,9 +124,12 @@ public class Schedule {
 	
 	public static void main()
 	{
-		//build array of processes
-		//call a schedule using said array
-		//schedule will build the queue with respective rules
+		ArrayList<Process> list = new ArrayList<Process>();
+		for (int i = 0; i < 5; i++)
+		{
+			list.add((Process) new Process(i, new Random().nextInt(6)  , new Random().nextInt(6)));
+		}
+		NP_Priority(list);
 		
 	}
 	
