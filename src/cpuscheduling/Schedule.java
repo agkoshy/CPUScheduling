@@ -1,72 +1,86 @@
 package cpuscheduling;
 
 public class Schedule {
-	
+
 	Process process;
 	int size, quantum;
 	int[] burst, wait, turnaround;
 	public Schedule()
 	{
 		process = new Process();
-//		this.size = process.numOfProcesses();
-//		this.burst = process.burstTime();
-//		this.quantum = process.quantumTime();
-		
+		//		this.size = process.numOfProcesses();
+		//		this.burst = process.burstTime();
+		//		this.quantum = process.quantumTime();
+
 	}
-	
+
 	/*
 	 * Nonpreemptive First-Come, First-Served (FCFS) Scheduling
 	 */
-	
+
 	private void NP_FCFS()
 	{
-		
+		int t1 = 0;
+		int t2 = 0;
+		wait[0]=0;
+		for(int i=0;i<size;i++)
+		{
+			wait[i]=burst[i]+wait[i];
+			t1+=wait[i];
+		}
+		for(int i=0;i<size;i++)
+		{
+			turnaround[i]=burst[i]+wait[i];
+			t2+=turnaround[i];
+		}
+		System.out.println("Average Waiting time= "+ t1/size);
+		System.out.println("Average Turn Around time= "+ t2/size);
 	}
-	
-	
+
+
 	/*
 	 * Nonpreemptive Shortest-Job-First (SJF) Scheduling
 	 */
-	
-	
+
+
 	private void NP_SJF()
 	{
-		
+
 	}
-	
-	
+
+
 	/*
 	 * Preemptive SJF (Shortest-Remaining-Time-First) Scheduling
 	 */
-	
+
 	private void P_SRTF()
 	{
-		
+
 	}
-	
-	
+
+
 	/*
 	 * Nonpreemptive Priority Scheduling
 	 */
-	
+
 	private void NP_Priority()
 	{
-		
+
 	}
-	
+
 	/*
 	 * Preemptive Priority Scheduling
 	 */
-	
+
 	private void P_Priority()
 	{
-		
+
 	}
-	
+
 	/*
 	 * Preemptive Round-Robin (RR) Scheduling
 	 */
-	
+
 	private void P_RR()
 	{
 		int flag;
@@ -100,20 +114,26 @@ public class Schedule {
 					}
 				}
 			}
-			for(int i=0;i<size;i++)
-				if(prc[i]>0)
+			for(int i=0;i<size;i++) 
+			{
+				if(prc[i]>0) 
+				{
 					flag=1;
+				}
+
+			}
+
 		}while(flag==1);
 		for(int i=0;i<size;i++) {
 			turnaround[i]=wait[i]+burst[i];
 		}
-		
+
 		for(int i = 0; i < size; i++)
 		{
 			bt = bt + wait[i];
 			ta  = ta + turnaround[i];
 		}
-		
+
 		System.out.println("Waiting time: " + bt/size);
 		System.out.println("Turnaround time: " + ta/size);
 	}
@@ -121,30 +141,30 @@ public class Schedule {
 	/*
 	 * Multilevel Queue Scheduling
 	 */
-	
+
 	private void MLQ()
 	{
-		
+
 	}
-	
+
 	/*
 	 * Multilevel Feedback Queue Scheduling
 	 */
-	
+
 	private void MLFQ()
 	{
-		
+
 	}
-	
-	
+
+
 	public static void main()
 	{
 		//build array of processes
 		//call a schedule using said array
 		//schedule will build the queue with respective rules
-		
+
 	}
-	
+
 	private void average()
 	{
 		//average waiting time
