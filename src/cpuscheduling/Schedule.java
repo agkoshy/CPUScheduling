@@ -82,14 +82,18 @@ public class Schedule extends Queue {
 		Queue q = readyQueue(list);
 
 		// executing queue
+		double waitTime = 0;
+		double turnAround = 0; 
 		for (int i = 0; i < q.size(); i++) {
 			try {
 				Process p = q.dequeue();
-				p.reqTime -= quota;
+				waitTime += p.reqTime - p.arrivalTime;
+				turnAround += p.reqTime;
 			} catch (Exception e) {
-
+				
 			}
 		}
+		average(waitTime, turnAround, q.size());
 	}
 
 	/*
@@ -116,16 +120,18 @@ public class Schedule extends Queue {
 		Queue q = readyQueue(list);
 
 		// executing queue
-		int waitTime = 0;
+		double waitTime = 0;
+		double turnAround = 0; 
 		for (int i = 0; i < q.size(); i++) {
 			try {
 				Process p = q.dequeue();
-				p.reqTime -= quota;
-				waitTime += quota;
+				waitTime += p.reqTime - p.arrivalTime;
+				turnAround += p.reqTime;
 			} catch (Exception e) {
-
+				
 			}
 		}
+		average(waitTime, turnAround, q.size());
 	}
 
 	/*
@@ -213,8 +219,7 @@ public class Schedule extends Queue {
 		return queue;
 	}
 
-	private void average() {
-		// average waiting time
-		// average turnaround time
+	private static void average(double x, double y, int z) {
+		System.out.println("Average wait time: " + (x / z) + "\nAverage turnaround time: " + (y / z));
 	}
 }
