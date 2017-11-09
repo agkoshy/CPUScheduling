@@ -5,6 +5,7 @@ public class Queue{
 	
 	private Node<Process> head;
 	private Node<Process> tail;
+	private int size;
 	
 	public static class Node<Process>
 	{
@@ -41,6 +42,11 @@ public class Queue{
 		return head.content;
 	}
 	
+	public int size()
+	{
+		return this.size;
+	}
+	
 	public void enqueue(Process process)
 	{
 		Node<Process> newNode = new Node<Process>();
@@ -55,9 +61,10 @@ public class Queue{
 			tail.next = newNode;
 			tail = newNode;
 		}
+		size = size + 1;
 	}
 	
-	public cpuscheduling.Process dequeue() throws Exception
+	public Process dequeue() throws Exception
 	{
 		if (isEmpty())
 			throw new Exception("Nothing to dequeue");
@@ -66,6 +73,7 @@ public class Queue{
 			Node<Process> temp;
 			temp = head;
 			head.next = head;
+			size = size - 1;
 			return temp.content;
 		}
 	}
@@ -227,6 +235,7 @@ public class Queue{
 	{
 		this.head = null;
 		this.tail = null;
+		this.size = 0;
 	}
 	
 	
