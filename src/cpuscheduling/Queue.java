@@ -7,6 +7,7 @@ public class Queue{
 	private Node<Process> tail;
 	private int size;
 	
+	@SuppressWarnings("hiding")
 	public static class Node<Process>
 	{
 		private Process content;
