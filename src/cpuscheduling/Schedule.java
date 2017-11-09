@@ -76,30 +76,7 @@ public class Schedule extends Queue{
 	{
 		Process temp;
 		
-		// insertion sort to sort prioritized processes
-		for (int i = 0; i < list.size(); i++)
-		{
-			for (int j = i; 0 < j; j--)
-			{
-				if ( list.get(j).getPriority() < list.get(j - 1).getPriority())
-				{
-					temp = list.get(j);
-					list.set(j, list.get(j - 1));
-					list.set(j -1, temp);
-				}
-			}
-		}
-	}
-
-	/*
-	 * Preemptive Priority Scheduling
-	 * 
-	 * Runs by priority until completion
-	 */
-	
-	private static void P_Priority(ArrayList<Process> list)
-	{
-		Process temp;
+		// insertion sort by priority
 		for (int i = 0; i < list.size(); i++)
 		{
 			for (int j = i; 0 < j; j--)
@@ -113,6 +90,42 @@ public class Schedule extends Queue{
 			}
 		}
 		
+		// build queue
+		for (Process p: list)
+		{
+			queue.enqueue(p);
+		}
+	}
+
+	/*
+	 * Preemptive Priority Scheduling
+	 * 
+	 * Runs by priority until completion
+	 */
+	
+	private static void P_Priority(ArrayList<Process> list)
+	{
+		Process temp;
+		
+		// insertion sort by priority
+		for (int i = 0; i < list.size(); i++)
+		{
+			for (int j = i; 0 < j; j--)
+			{
+				if ( list.get(j).getPriority() < list.get(j - 1).getPriority())
+				{
+					temp = list.get(j);
+					list.set(j, list.get(j - 1));
+					list.set(j -1, temp);
+				}
+			}
+		}
+		
+		// build queue
+		for (Process p: list)
+		{
+			queue.enqueue(p);
+		}
 	}
 
 	/*
