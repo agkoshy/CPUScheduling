@@ -43,7 +43,7 @@ public class Queue{
 	
 	public void enqueue(Process process)
 	{
-		Node<Process> newNode = new Node();
+		Node<Process> newNode = new Node<Process>();
 		newNode.content = process;
 		if (isEmpty())
 		{

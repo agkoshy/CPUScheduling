@@ -13,12 +13,12 @@ public class Schedule extends Queue{
 	Process process;
 	int size, quantum;
 	int[] burst, wait, turnaround;
+	
 	public Schedule()
 	{
 		//		this.size = process.numOfProcesses();
 		//		this.burst = process.burstTime();
 		//		this.quantum = process.quantumTime();
-
 	}
 
 	/*
@@ -68,6 +68,7 @@ public class Schedule extends Queue{
 
 	/*
 	 * Non-preemptive Priority Scheduling
+	 * 
 	 * Highest priority is current running process
 	 */
 	
@@ -92,6 +93,7 @@ public class Schedule extends Queue{
 
 	/*
 	 * Preemptive Priority Scheduling
+	 * 
 	 * Runs by priority until completion
 	 */
 	
