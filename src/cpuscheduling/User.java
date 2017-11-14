@@ -75,31 +75,48 @@ public class User extends JFrame implements ActionListener{
 		// call a schedule using said array
 		// schedule will build the queue with respective rules
 	}
-	public static ArrayList<Integer> getNumber()
+	public static int[] getNumber()
 	{
-		ArrayList<Integer> numbers = new ArrayList<Integer>();   
-		Random randomGenerator = new Random(50);
-		while (numbers.size() < 10) {
-
-		    int random = randomGenerator .nextInt(10);
-		    numbers.add(random);
+		int[] numbers = new int[10];   
+		for(int i = 0; i < numbers.length; i++)
+		{
+			numbers[i] = new Random().nextInt(60);
 		}
 		return numbers;
 		
 	}
 	
-	public static ArrayList<Integer> getDevNum() 
+	public static int[] getDevNum() 
 	{
-		ArrayList<Integer> numbers = new ArrayList<Integer>();   
-		Random randomGenerator = new Random(50);
-		while (numbers.size() < 10) {
-
-		    int random = randomGenerator .nextInt(10);
-		    if (!numbers.contains(random)) {
-		        numbers.add(random);
-		    }
+		boolean duplicate = false;
+		int max = 100;
+		int min = 1;
+		Random rand = new Random();
+		
+		int[] all = new int[20];
+		for (int x = 0; x < 20; x++) {
+			duplicate = false;
+			// generates # from 1-100
+			int randomNum = rand.nextInt((max - min) + 1) + min;
+			// iterates through array
+			for (int i : all) {
+				// if there's a match (duplicate) flag boolean
+				if (i == randomNum) {
+					duplicate = true;
+					// we can break the loop here
+					break;
+				}
+			}
+			// if boolean is true, just stay at the same x value(for loop will
+			// increase by 1, thats why we decrese it by 1 here)
+			if (duplicate) {
+				x--;
+			} else {
+				// if everything is ok, set the number
+				all[x] = randomNum;
+			}
 		}
-		return numbers;
+		return all;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
