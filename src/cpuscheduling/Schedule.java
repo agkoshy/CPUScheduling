@@ -13,8 +13,14 @@ public class Schedule extends Queue {
 	Process process;
 	static int quota = 2;
 
-	int size, quantum;
-	int[] burst, wait, turnaround;
+	static int size;
+
+	static int quantum = new Random().nextInt(10);
+	static double waitTime = 0;
+	static double turnAround = 0; 
+	static int[] burst;
+	static int[] wait;
+	static int[] turnaround;
 
 	public Schedule() {
 		// this.size = process.numOfProcesses();
@@ -26,27 +32,78 @@ public class Schedule extends Queue {
 	 * Non-preemptive First-Come, First-Served (FCFS) Scheduling
 	 */
 
-	private void NP_FCFS() {
-		int t1 = 0;
-		int t2 = 0;
-		wait[0] = 0;
-		for (int i = 0; i < size; i++) {
-			wait[i] = burst[i] + wait[i];
-			t1 += wait[i];
+	static void NP_FCFS(ArrayList<Process> list) {
+		size = list.size();
+		wait = new int[size];
+		turnaround = new int[size];
+		for (int i = 0; i < size; i++) 
+		{
+			for (int j = i; 0 < j; j--)
+			{
+
+				wait[j] = list.get(j).getReqTime() - list.get(j).getArrivalTime();
+			   turnaround[i] = list.get(i).getReqTime() + wait[i];
+			}
 		}
-		for (int i = 0; i < size; i++) {
-			turnaround[i] = burst[i] + wait[i];
-			t2 += turnaround[i];
+		// build queue
+		Queue q = readyQueue(list);
+
+		// executing queue
+		for (int i = 0; i < q.size(); i++) {
+			try {
+				Process p = q.dequeue();
+				waitTime += p.reqTime - p.arrivalTime;
+				turnAround += p.reqTime;
+			} catch (Exception e) {
+				
+			}
 		}
-		System.out.println("Average Waiting time= " + t1 / size);
-		System.out.println("Average Turn Around time= " + t2 / size);
+		
+		average(waitTime, turnAround, size);
 	}
+		
 
 	/*
 	 * Non-preemptive Shortest-Job-First (SJF) Scheduling
 	 */
 
-	private void NP_SJF() {
+	static void NP_SJF(ArrayList<Process> list){
+		int t; 
+		Process temp;
+		size = list.size();
+		wait = new int[size+1];
+		turnaround = new int[size];
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = i; 0 < j; j--) {
+				if (list.get(j).getReqTime() < list.get(j - 1).getReqTime()) {
+					temp = list.get(j);
+					list.set(j, list.get(j - 1));
+					list.set(j - 1, temp);
+				}
+			}
+		}
+		for(int i=0;i<size;i++) 
+		{
+			turnaround[i]=list.get(i).getReqTime()+wait[i]; 
+			wait[i+1]=turnaround[i];
+		}
+		
+		
+		// build queue
+		Queue q = readyQueue(list);
+
+		// executing queue
+		for (int i = 0; i < q.size(); i++) {
+			try {
+				Process p = q.dequeue();
+				waitTime += p.reqTime - p.arrivalTime;
+				turnAround += p.reqTime;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		average(waitTime, turnAround, q.size());
 
 	}
 
@@ -54,8 +111,42 @@ public class Schedule extends Queue {
 	 * Preemptive SJF (Shortest-Remaining-Time-First) Scheduling
 	 */
 
-	private void P_SRTF() {
+	static void P_SRTF(ArrayList<Process> list) {
+		Process temp;
+		size = list.size();
+		wait = new int[size+1];
+		turnaround = new int[size];
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = i; 0 < j; j--) {
+				if (list.get(j).getReqTime() < list.get(j - 1).getReqTime()) {
+					temp = list.get(j);
+					list.set(j, list.get(j - 1));
+					list.set(j - 1, temp);
+				}
+			}
+		}
+		for(int i=0;i<size;i++) 
+		{
+			turnaround[i]=list.get(i).getReqTime()+wait[i]; 
+			wait[i+1]=turnaround[i];
+		}
+		
+		
+		// build queue
+		Queue q = readyQueue(list);
 
+		// executing queue
+		for (int i = 0; i < q.size(); i++) {
+			try {
+				Process p = q.dequeue();
+				waitTime += p.reqTime - p.arrivalTime;
+				turnAround += p.reqTime;
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		average(waitTime, turnAround, q.size());
 	}
 
 	/*
@@ -64,7 +155,7 @@ public class Schedule extends Queue {
 	 * Highest priority is current running process
 	 */
 
-	private static void NP_Priority(ArrayList<Process> list) {
+	static void NP_Priority(ArrayList<Process> list) {
 		Process temp;
 
 		// insertion sort by priority
@@ -82,8 +173,6 @@ public class Schedule extends Queue {
 		Queue q = readyQueue(list);
 
 		// executing queue
-		double waitTime = 0;
-		double turnAround = 0; 
 		for (int i = 0; i < q.size(); i++) {
 			try {
 				Process p = q.dequeue();
@@ -102,7 +191,7 @@ public class Schedule extends Queue {
 	 * Runs by priority until completion
 	 */
 
-	private static void P_Priority(ArrayList<Process> list) {
+	static void P_Priority(ArrayList<Process> list) {
 		Process temp;
 
 		// insertion sort by priority
@@ -120,8 +209,6 @@ public class Schedule extends Queue {
 		Queue q = readyQueue(list);
 
 		// executing queue
-		double waitTime = 0;
-		double turnAround = 0; 
 		for (int i = 0; i < q.size(); i++) {
 			try {
 				Process p = q.dequeue();
@@ -138,10 +225,9 @@ public class Schedule extends Queue {
 	 * Preemptive Round-Robin (RR) Scheduling
 	 */
 
-	private void P_RR() {
+	static void P_RR(ArrayList<Process> list) {
 		int flag;
-		int bt = 0;
-		int ta = 0;
+		size = list.size();
 		int[] prc = new int[size];
 		do {
 			flag = 0;
@@ -172,24 +258,26 @@ public class Schedule extends Queue {
 			}
 
 		} while (flag == 1);
-		for (int i = 0; i < size; i++) {
+		
+		for (int i = 0; i < size; i++) 
+		{
 			turnaround[i] = wait[i] + burst[i];
 		}
-
-		for (int i = 0; i < size; i++) {
-			bt = bt + wait[i];
-			ta = ta + turnaround[i];
+		
+		for(int i = 0; i < size; i++) 
+		{
+			waitTime = waitTime + wait[i];
+			turnAround = turnAround + turnaround[i];
 		}
+		average(waitTime, turnAround, size);
 
-		System.out.println("Waiting time: " + bt / size);
-		System.out.println("Turnaround time: " + ta / size);
 	}
 
 	/*
 	 * Multilevel Queue Scheduling
 	 */
 
-	private void MLQ() {
+	static void MLQ(ArrayList<Process> list) {
 
 	}
 
@@ -197,20 +285,10 @@ public class Schedule extends Queue {
 	 * Multilevel Feedback Queue Scheduling
 	 */
 
-	private void MLFQ() {
+	static void MLFQ(ArrayList<Process> list) {
 
 	}
 
-	public static void main() {
-		ArrayList<Process> list = new ArrayList<Process>();
-		for (int i = 0; i < 5; i++) {
-			list.add((Process) new Process(i, new Random().nextInt(6), new Random().nextInt(6)));
-		}
-		NP_Priority(list);
-		// build array of processes
-		// call a schedule using said array
-		// schedule will build the queue with respective rules
-	}
 
 	public static Queue readyQueue(ArrayList<Process> list) {
 		for (Process p : list) {
@@ -220,6 +298,10 @@ public class Schedule extends Queue {
 	}
 
 	private static void average(double x, double y, int z) {
+		if(x/z == 0 || y/z == 0) {
+			System.out.println("Average wait time: " + (x / z) + "\nAverage turnaround time: " + (y / z));
+
+		}
 		System.out.println("Average wait time: " + (x / z) + "\nAverage turnaround time: " + (y / z));
 	}
 }

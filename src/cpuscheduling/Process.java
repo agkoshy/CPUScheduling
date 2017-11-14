@@ -7,7 +7,9 @@ public class Process {
 	int arrivalTime;
 	int reqTime;
 	int priority;
-	int[] burst;
+	int cpuTime[];
+	int IO[];
+	int device[];
 	Scanner scn = new Scanner(System.in);
 	
 	public Process(int arrivalTime, int reqTime, int priority)
@@ -15,9 +17,20 @@ public class Process {
 		this.arrivalTime = arrivalTime;
 		this.reqTime = reqTime;
 		this.priority = priority;
-//		burst = new int[this.numOfProcesses()];
+	}
+	public Process(int arrivalTime, int cpuTime[], int priority, int[] IO, int[] device)
+	{
+		this.arrivalTime = arrivalTime;
+		this.cpuTime = cpuTime;
+		this.priority = priority;
+		this.IO = IO;
+		this.device = device;
 	}
 	
+	public Process(int arrivalTime, int reqTime) {
+		this.arrivalTime = arrivalTime;
+		this.reqTime = reqTime;
+	}
 	public int getArrivalTime()
 	{
 		return this.arrivalTime;
@@ -31,6 +44,15 @@ public class Process {
 	public int getPriority()
 	{
 		return this.priority;
+	}
+	
+	public int[] getIO() 
+	{
+		return this.IO;
+	}
+	public int[] getDevice()
+	{
+		return this.device;
 	}
 	
 //	
