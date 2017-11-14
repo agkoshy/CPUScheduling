@@ -1,9 +1,6 @@
 package cpuscheduling;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Random;
 
 public class Schedule extends Queue {
@@ -189,16 +186,24 @@ public class Schedule extends Queue {
 	 * Multilevel Queue Scheduling
 	 */
 
-	private void MLQ() {
-
+	private void MLQ(ArrayList<Process> list) {
+		P_RR(); // foreground P_RR(list);
+		// queue quota process
+		// assume certain process type, their priority are indicated by modulus
+		NP_FCFS(); //background queue
 	}
 
 	/*
 	 * Multilevel Feedback Queue Scheduling
 	 */
 
-	private void MLFQ() {
-
+	private void MLFQ(ArrayList<Process> list) {
+		/*
+		 * sorter to determine priority queue level of each process
+		 */
+		P_RR(); //Queue 0 quantum x
+		P_RR(); //Queue 1 quantum y
+		NP_FCFS(); //Queue 2
 	}
 
 	public static void main() {
