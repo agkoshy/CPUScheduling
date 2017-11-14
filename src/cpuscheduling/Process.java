@@ -1,5 +1,6 @@
 package cpuscheduling;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Process {
@@ -7,9 +8,9 @@ public class Process {
 	int arrivalTime;
 	int reqTime;
 	int priority;
-	int cpuTime[];
-	int IO[];
-	int device[];
+	ArrayList<Integer> cpuTime;
+	ArrayList<Integer> IO;
+	ArrayList<Integer> device;
 	Scanner scn = new Scanner(System.in);
 
 	public Process(int arrivalTime, int reqTime, int priority) {
@@ -19,6 +20,11 @@ public class Process {
 	}
 
 	public Process(int arrivalTime, int cpuTime[], int priority, int[] IO, int[] device) {
+		
+	}
+
+	public Process(int arrivalTime, ArrayList<Integer> cpuTime, int priority, ArrayList<Integer> IO,
+			ArrayList<Integer> device) {
 		this.arrivalTime = arrivalTime;
 		this.cpuTime = cpuTime;
 		this.priority = priority;
@@ -43,14 +49,38 @@ public class Process {
 		return this.priority;
 	}
 
-	public int[] getIO() {
+	public ArrayList<Integer> getIO() {
 		return this.IO;
 	}
 
-	public int[] getDevice() {
+	public ArrayList<Integer> getDevice() {
 		return this.device;
 	}
 
+	public ArrayList<Integer> getCpuTime()
+	{
+		return this.cpuTime;
+	}
+
+	//
+	// public int numOfProcesses() {
+	// System.out.println("Enter number of Processes");
+	// return scn.nextInt();
+	// }
+	//
+	// public int[] burstTime() {
+	// int i;
+	// System.out.println("Enter burst time");
+	// for(i = 0; i < this.numOfProcesses(); i++) {
+	// burst[i] = scn.nextInt();
+	// }
+	// return burst;
+	// }
+	//
+	// public int quantumTime() {
+	// System.out.println("Enter quantum time");
+	// return scn.nextInt();
+	// }
 	//
 	// public int numOfProcesses() {
 	// System.out.println("Enter number of Processes");
