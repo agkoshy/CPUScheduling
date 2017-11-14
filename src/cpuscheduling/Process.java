@@ -8,9 +8,9 @@ public class Process {
 	int arrivalTime;
 	int reqTime;
 	int priority;
-	ArrayList<Integer> cpuTime;
-	ArrayList<Integer> IO;
-	ArrayList<Integer> device;
+	int[] cpuTime;
+	int[] IO;
+	int[] device;
 	Scanner scn = new Scanner(System.in);
 
 	public Process(int arrivalTime, int reqTime, int priority) {
@@ -19,12 +19,13 @@ public class Process {
 		this.priority = priority;
 	}
 
-	public Process(int arrivalTime, int cpuTime[], int priority, int[] IO, int[] device) {
-		
-	}
-
 	public Process(int arrivalTime, ArrayList<Integer> cpuTime, int priority, ArrayList<Integer> IO,
 			ArrayList<Integer> device) {
+		
+	}
+	
+	public Process(int arrivalTime, int[] cpuTime, int priority, int[] IO, int[] device)
+	{
 		this.arrivalTime = arrivalTime;
 		this.cpuTime = cpuTime;
 		this.priority = priority;
@@ -48,16 +49,17 @@ public class Process {
 	public int getPriority() {
 		return this.priority;
 	}
-
-	public ArrayList<Integer> getIO() {
+	
+	public int[] getIO() 
+	{
 		return this.IO;
 	}
-
-	public ArrayList<Integer> getDevice() {
+	public int[] getDevice()
+	{
 		return this.device;
 	}
 
-	public ArrayList<Integer> getCpuTime()
+	public int[] getCpuTime()
 	{
 		return this.cpuTime;
 	}
