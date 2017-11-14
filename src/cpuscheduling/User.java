@@ -8,6 +8,17 @@ import java.util.Random;
 
 import javax.swing.*;
 
+/**
+ * User class
+ *
+ * This class contains the frontend load, that enables a user to interact with a GUI that contains all the different types of
+ * scheduling methods. Contains the main method so this class is the one that executes.
+ *
+ * @author Alvis Koshy, Zhu Su
+ * @version 1.0
+ * @since 2017-11-14
+ */
+
 public class User extends JFrame implements ActionListener {
 
 	JFrame frame = new JFrame("Scheduler");
@@ -18,15 +29,18 @@ public class User extends JFrame implements ActionListener {
 			"Priorty", "" + "Preemptive Priority", "Round Robin", "Multilevel Queue", "Multilevel Feedback Queue" };
 	static JComboBox cmb = new JComboBox(options);
 	static ArrayList<Process> list = new ArrayList<Process>();
-	static ArrayList<Process> plist = new ArrayList<Process>();
-	static ArrayList<Process> list3 = new ArrayList<Process>();
 	static Process process;
-
+	
+	/**
+	 * A blank constructor
+	 */
 	public User() {
 		super();
 		initialize();
 	}
-
+	/**
+	 * A method to initialize the GUI
+	 */
 	private void initialize() {
 
 		frame.add(schedule);
@@ -42,29 +56,17 @@ public class User extends JFrame implements ActionListener {
 		frame.setVisible(true);
 
 	}
-
+	/**
+	 * The main method, used for runningg the program
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
-		System.out.println("Process\tArrival\tBurst\tPriority");
-		for (int i = 0; i < 5; i++) {
-
-			list3.add(process = new Process(i, getNumber(), new Random().nextInt(6), getNumber(), getDevNum()));
-		}
-		for (int i = 0; i < 5; i++) {
-			list.add(process = new Process(i, new Random().nextInt(100)));
-			System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime() + "\t"
-					+ process.getPriority());
-		}
-
-		for (int i = 0; i < 5; i++) {
-			plist.add(process = new Process(i, new Random().nextInt(100), new Random().nextInt(6)));
-			System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime() + "\t"
-					+ process.getPriority());
-		}
-
+		
+		//run and init the GUI
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new User().setVisible(true);
+				new User().setVisible(false);
 			}
 		});
 
@@ -73,41 +75,34 @@ public class User extends JFrame implements ActionListener {
 		// schedule will build the queue with respective rules
 	}
 
-	public static ArrayList<Integer> getNumber() {
-		ArrayList<Integer> numbers = new ArrayList<Integer>();
-		Random randomGenerator = new Random(50);
-		while (numbers.size() < 10) {
-
-			int random = randomGenerator.nextInt(10);
-			numbers.add(random);
-			
-	public static int[] getNumber()
-	{
-		int[] numbers = new int[10];   
-		for(int i = 0; i < numbers.length; i++)
-		{
+	/**
+	 * An array getter that populates an array with random int values ranging from 0-60
+	 * 
+	 * @return
+	 * 		numbers - an array that contains the random values
+	 */
+	public static int[] getNumber() {
+		int[] numbers = new int[5];
+		for (int i = 0; i < numbers.length; i++) {
 			numbers[i] = new Random().nextInt(60);
 		}
 		return numbers;
 
 	}
-
-	public static ArrayList<Integer> getDevNum() {
-		ArrayList<Integer> numbers = new ArrayList<Integer>();
-		Random randomGenerator = new Random(50);
-		while (numbers.size() < 10) {
-
-			int random = randomGenerator.nextInt(10);
-			if (!numbers.contains(random)) {
-				numbers.add(random);
-	
-	public static int[] getDevNum() 
-	{
+	/**
+	 * An array getter that populates an array in conjunction with numbers, since it relies on IO
+	 * This iterates through and checks to see if there is any duplicates in the array and avoids choosing that number
+	 * device.
+	 * 
+	 * @return
+	 * 		all - an array of device numbers that has no duplicates
+	 */	
+	public static int[] getDevNum() {
 		boolean duplicate = false;
 		int max = 100;
 		int min = 1;
 		Random rand = new Random();
-		
+
 		int[] all = new int[20];
 		for (int x = 0; x < 20; x++) {
 			duplicate = false;
@@ -115,78 +110,119 @@ public class User extends JFrame implements ActionListener {
 			int randomNum = rand.nextInt((max - min) + 1) + min;
 			// iterates through array
 			for (int i : all) {
-				// if there's a match (duplicate) flag boolean
+				// if there's a matching flag boolean
 				if (i == randomNum) {
 					duplicate = true;
-					// we can break the loop here
 					break;
 				}
 			}
-			// if boolean is true, just stay at the same x value(for loop will
-			// increase by 1, thats why we decrese it by 1 here)
+			// if boolean is true, stay at the same x value
 			if (duplicate) {
 				x--;
 			} else {
-				// if everything is ok, set the number
 				all[x] = randomNum;
 			}
 		}
 		return all;
 	}
-
+	/**
+	 * The method that gives the buttons and checkbox an action listener
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		//If exit btn is clicked, close gui
+		if(buttonExit == e.getSource())
+		{
+			frame.setVisible(false);
+			frame.dispose();
+		}
+		
 		Object selected = cmb.getSelectedItem();
+		//if FCFS is chosen, parse it to FCFS method in schedule
 		if (selected.toString().equals("First Come First Served")) {
 			if (buttonOK == e.getSource()) {
+				for (int i = 0; i < 5; i++) {
+					list.add(process = new Process(i, new Random().nextInt(100)));
+					System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+				}
 				Schedule.NP_FCFS(list);
 				frame.dispose();
 
 			}
+			//if SJF is chosen, parse it to SJF method in schedule
 		} else if (selected.toString().equals("Shortest Job First")) {
+			
 			if (buttonOK == e.getSource()) {
+				for (int i = 0; i < 5; i++) {
+					list.add(process = new Process(i, new Random().nextInt(100)));
+					System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+				}
 				Schedule.NP_SJF(list);
 				frame.dispose();
 
 			}
+			//if SRTF is chosen, parse it to SRTF method in schedule
 		} else if (selected.toString().equals("Preemptive Shortest Job First")) {
 			if (buttonOK == e.getSource()) {
+				for (int i = 0; i < 5; i++) {
+					list.add(process = new Process(i, getNumber(), new Random().nextInt(100), getNumber(), getDevNum()));
+					System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+				}
 				Schedule.P_SRTF(list);
 				frame.dispose();
 
 			}
+			//if priority is chosen, parse it to priority method in schedule
 		} else if (selected.toString().equals("Priorty")) {
 			if (buttonOK == e.getSource()) {
-				Schedule.NP_Priority(plist);
+				for (int i = 0; i < 5; i++) {
+					list.add(process = new Process(i, new Random().nextInt(100), new Random().nextInt(6)));
+					System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime() + "\t"
+							+ process.getPriority());
+				}
+				Schedule.NP_Priority(list);
 				frame.dispose();
-
-			}
-
+				//if pre-emptive priority is chosen, parse it to pre-emptive priority method in schedule
 		} else if (selected.toString().equals("Preemptive Priority")) {
-			if (buttonOK == e.getSource()) {
-				Schedule.P_Priority(plist);
-
-			} else if (selected.toString().equals("Preemptive Priority")) {
 				if (buttonOK == e.getSource()) {
-					Schedule.P_Priority(list3);
+					for (int i = 0; i < 5; i++) {
+						list.add(process = new Process(i, new Random().nextInt(100), new Random().nextInt(6)));
+						System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime() + "\t"
+								+ process.getPriority());
+					}
+					Schedule.P_Priority(list);
 					frame.dispose();
 
 				}
-			} else if (selected.toString().equals("Round Robin")) {
+				//if RR is chosen, parse it to RR method in schedule
+		} else if (selected.toString().equals("Round Robin")) {
 				if (buttonOK == e.getSource()) {
+					for (int i = 0; i < 5; i++) {
+						list.add(process = new Process(i, new Random().nextInt(100)));
+						System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+					}
 					Schedule.P_RR(list);
 					frame.dispose();
 
 				}
-			} else if (selected.toString().equals("Multilevel Queue")) {
+				//if MLQ is chosen, parse it to MLQ method in schedule
+		} else if (selected.toString().equals("Multilevel Queue")) {
 				if (buttonOK == e.getSource()) {
+					for (int i = 0; i < 5; i++) {
+						list.add(process = new Process(i, new Random().nextInt(100)));
+						System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+					}
 					Schedule.MLQ(list);
 					frame.dispose();
 
 				}
-			} else if (selected.toString().equals("Multilevel Feedback Queue")) {
+				//if MLFQ is chosen, parse it to MLFQ method in schedule
+		} else if (selected.toString().equals("Multilevel Feedback Queue")) {
 				if (buttonOK == e.getSource()) {
+					for (int i = 0; i < 5; i++) {
+						list.add(process = new Process(i, new Random().nextInt(100)));
+						System.out.println("P" + (i + 1) + "\t" + process.getArrivalTime() + "\t" + process.getReqTime());
+					}
 					Schedule.MLFQ(list);
 					frame.dispose();
 
