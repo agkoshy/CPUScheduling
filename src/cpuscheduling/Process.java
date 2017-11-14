@@ -1,5 +1,6 @@
 package cpuscheduling;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Process {
@@ -7,9 +8,9 @@ public class Process {
 	int arrivalTime;
 	int reqTime;
 	int priority;
-	int cpuTime[];
-	int IO[];
-	int device[];
+	ArrayList<Integer> cpuTime;
+	ArrayList<Integer> IO;
+	ArrayList<Integer> device;
 	Scanner scn = new Scanner(System.in);
 	
 	public Process(int arrivalTime, int reqTime, int priority)
@@ -18,7 +19,7 @@ public class Process {
 		this.reqTime = reqTime;
 		this.priority = priority;
 	}
-	public Process(int arrivalTime, int cpuTime[], int priority, int[] IO, int[] device)
+	public Process(int arrivalTime, ArrayList<Integer> cpuTime, int priority, ArrayList<Integer> IO, ArrayList<Integer> device)
 	{
 		this.arrivalTime = arrivalTime;
 		this.cpuTime = cpuTime;
@@ -46,13 +47,17 @@ public class Process {
 		return this.priority;
 	}
 	
-	public int[] getIO() 
+	public ArrayList<Integer> getIO() 
 	{
 		return this.IO;
 	}
-	public int[] getDevice()
+	public ArrayList<Integer> getDevice()
 	{
 		return this.device;
+	}
+	public ArrayList<Integer> getCpuTime()
+	{
+		return this.cpuTime;
 	}
 	
 //	
